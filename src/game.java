@@ -2,13 +2,13 @@ import extensions.CSVFile;
 
 class fightquiz extends Program {
     //fonctions pratiques
-    int idSup (String[] tab, int id) {
+    int idSup (String[] tab, int id) { //donne l'id supérieur, ou 0 si cet id est trop grand pour le tableau entré en paramètre
         if (id == length(tab)-1) {
             return(0);
         }
         return(id+1);
     }
-    String readFile (String dir) {
+    String readFile (String dir) { //lit le contenu d'un fichier
         extensions.File file = newFile(dir);
         String res = "";
         for (int id = 0; id < 22; id += 1) {
@@ -17,7 +17,7 @@ class fightquiz extends Program {
         res += readLine(file);
         return(res);
     }
-    String readFileAlt (String fileN) {
+    String readFileAlt (String fileN) { //version alternative de la fonction précédente, nécéssaire pour l'affichage des questions
         String dir = "ressources/img/question/"+fileN;
         extensions.File file = newFile(dir);
         String res = "";
@@ -27,7 +27,7 @@ class fightquiz extends Program {
         res += readLine(file);
         return(res);
     }
-    int nbLignes(String cheminFichier){
+    int nbLignes(String cheminFichier){ //donne le nombre de lignes d'un document texte
         extensions.File fich = newFile(cheminFichier);
         int count = 1;
         boolean fini = false;
@@ -42,7 +42,7 @@ class fightquiz extends Program {
         }
         return(count);
     }
-    String[] initImg (String path) {
+    String[] initImg (String path) { //assigne chaque "frame" d'une animation à un tableau de Strings
         String[] files = getAllFilesFromDirectory("ressources/img/"+path);
         String[] tab = new String[length(files)];
         for (int id = 0; id < length(tab); id += 1) {
@@ -50,7 +50,7 @@ class fightquiz extends Program {
         }
         return(tab);
     }
-    String viesAffich (int vies){
+    String viesAffich (int vies){ //formattage de l'affichage des vies
         String aff = "";
         int compteur = 0;
         while (compteur < vies) {
@@ -63,8 +63,8 @@ class fightquiz extends Program {
         }
         return(substring(aff,0,length(aff)-1));
     }
-    void showQuestion(int vies, Question ques, int score) {
-        print(readFileAlt("B4S.txt")+scoreFormat(score)+readFileAlt("B4L.txt")+viesAffich(vies)+readFileAlt("B4Q.txt"));
+    void showQuestion(int vies, Question ques, int score) { //formattage de l'affichage de la question
+        print(readFileAlt("B4S.txt")+scoreFormat(score,false)+readFileAlt("B4L.txt")+viesAffich(vies)+readFileAlt("B4Q.txt"));
         int spaces = (78 - length(ques.ques))/2;
         for (int id = 0; id < spaces; id += 1) {
             print(" ");
@@ -75,7 +75,7 @@ class fightquiz extends Program {
         }
         println(readFileAlt("AFQ.txt"));
     }
-    void showRéponses(Question ques) {
+    void showRéponses(Question ques) { //formattage de l'affichage des réponses
         print(readFileAlt("B4R.txt"));
         int spaces = (30 - length(ques.rep1.rep))/2;
         for (int id = 0; id < spaces; id += 1) {
@@ -114,7 +114,7 @@ class fightquiz extends Program {
         }
         println(readFileAlt("AFR.txt"));
     }
-    void showBattle(String mat, String battleBg) {
+    void showBattle(String mat, String battleBg) { //formattage de l'affichage du combat
         extensions.File main = newFile("ressources/img/question/mnstr/"+battleBg+".txt");
         extensions.File mnstr = newFile("ressources/img/question/mnstr/"+mat+".txt");
         println(readLine(main));
@@ -126,7 +126,7 @@ class fightquiz extends Program {
         println(readLine(main));
         println(readLine(main));
     }
-    Réponse[] shuffleRep(Réponse[] tab) {
+    Réponse[] shuffleRep(Réponse[] tab) { //mélange des réponses données
         Réponse[] shuffledTab = new Réponse[]{initRep("none","false"),initRep("none","false"),initRep("none","false"),initRep("none","false")};
         for (int id = 0; id < 4; id += 1) {
             int randId = (int) (random() * (double) 4);
@@ -137,7 +137,7 @@ class fightquiz extends Program {
         }
         return shuffledTab;
     }
-    Réponse initRep(String repStr, String bonneRep) {
+    Réponse initRep(String repStr, String bonneRep) { //initialisation d'une réponse
         Réponse rep = new Réponse();
         rep.rep = repStr;
         if (length(rep.rep) % 2 != 0) {
@@ -150,7 +150,7 @@ class fightquiz extends Program {
         }
         return rep;
     }
-    Question initQues(String quesStr, Réponse rep1, Réponse rep2, Réponse rep3, Réponse rep4) {
+    Question initQues(String quesStr, Réponse rep1, Réponse rep2, Réponse rep3, Réponse rep4) { //initialisation d'une question
         Question ques = new Question();
         ques.ques = quesStr;
         if (length(ques.ques) % 2 != 0) {
@@ -163,13 +163,13 @@ class fightquiz extends Program {
         ques.dejaPasse = false;
         return ques;
     }
-    Matière initMat(String matStr, Question[] lstQues) {
+    Matière initMat(String matStr, Question[] lstQues) { //initialisation d'une matière
         Matière mat = new Matière();
         mat.mat = matStr;
         mat.questions = lstQues;
         return mat;
     }
-    Matière[] loadData() {
+    Matière[] loadData() { //chargement des questions/réponses
         CSVFile csvMatières = loadCSV("ressources/data/matières.csv");
         int nbMat = rowCount(csvMatières) - 1;
         Matière[] matières = new Matière[nbMat];
@@ -191,7 +191,7 @@ class fightquiz extends Program {
         }
         return matières;
     }
-    Question chargerQuestion(Matière[] tab, int mat) {
+    Question chargerQuestion(Matière[] tab, int mat) { //choix aléatoire d'une question dans une matière donnée
         int idQues = (int) (random() * (double) length(tab[mat].questions));
         while (tab[mat].questions[idQues].dejaPasse == true) {
             idQues = (int) (random() * (double) length(tab[mat].questions));
@@ -199,7 +199,7 @@ class fightquiz extends Program {
         tab[mat].questions[idQues].dejaPasse = true;
         return(tab[mat].questions[idQues]);
     }
-    boolean entrerRep(int vies, String mat, Question ques, int score, String battleBg) {
+    boolean entrerRep(int vies, String mat, Question ques, int score, String battleBg) { //gère l'entrée d'une réponse de façon correcte
         String rep = "  ";
         boolean repOK = false;
         while (!repOK) {
@@ -224,16 +224,19 @@ class fightquiz extends Program {
         }
         return(ques.rep4.bonneRep);
     }
-    String scoreFormat (int score) {
+    String scoreFormat (int score, boolean battu) { //formattage de l'affichage du score
         String ScoreS = "" + score;
         while (length(ScoreS) < 8) {
             ScoreS = "0" + ScoreS;
         }
-        return(ScoreS);
+        if (battu) {
+            return ("⭐"+ScoreS);
+        }
+        return("  "+ScoreS);
     }
-    void affichScoreBattle(int prevScore, int newScore, int frame, String battleBg) {
-        String prevScoreS = scoreFormat(prevScore);
-        String newScoreS = scoreFormat(newScore);
+    void affichScoreBattle(int prevScore, int newScore, int frame, String battleBg) { //formattage de l'affichage du nouveau score
+        String prevScoreS = scoreFormat(prevScore,false);
+        String newScoreS = scoreFormat(newScore,false);
         extensions.File file = newFile("ressources/img/question/mnstr/score/"+battleBg+"/"+frame+".txt");
         println(readLine(file));
         println(readLine(file));
@@ -255,7 +258,7 @@ class fightquiz extends Program {
             println(readLine(file));
         }
     }
-    void affichAnimFromCSV(CSVFile fileList, int imgId) {
+    void affichAnimFromCSV(CSVFile fileList, int imgId) { //affichage d'une animation dans une cinématique
         println(getCell(fileList, imgId, 0));
         String[] imgData = initImg("cinematiques/"+getCell(fileList, imgId, 0));
         if (equals(getCell(fileList, imgId, 3),"false")) {
@@ -276,7 +279,7 @@ class fightquiz extends Program {
         }
         delay(stringToInt(getCell(fileList, imgId, 5))*1000);
     }
-    int score (double startTime, double answerTime) {
+    int score (double startTime, double answerTime) { //détermination du score
         double timeDiff = answerTime - startTime;
         if (timeDiff < 15000) {
             int score = 1000;
@@ -291,7 +294,7 @@ class fightquiz extends Program {
         }
         return 500;
     }
-    Score initScore(int score, String nom) {
+    Score initScore(int score, String nom, String battu) { //initialisation d'un score
         Score sc = new Score();
         if (score > 99999999) {
             sc.score = 99999999;
@@ -299,18 +302,23 @@ class fightquiz extends Program {
             sc.score = score;
         }
         sc.nom = nom;
+        if (equals(battu,"true")) {
+            sc.battu = true;
+        } else {
+            sc.battu = false;
+        }
         return sc;
     }
-    Score[] loadScores() {
+    Score[] loadScores() { //chargement des scores
         CSVFile csvScores = loadCSV("ressources/data/score.csv");
         Score[] tab = new Score[6];
         for (int id = 1; id <= 6; id += 1) {
-            tab[id-1] = initScore(stringToInt(getCell(csvScores,id,0)),getCell(csvScores,id,1));
+            tab[id-1] = initScore(stringToInt(getCell(csvScores,id,0)),getCell(csvScores,id,1),getCell(csvScores,id,2));
         }
         sortScores(tab);
         return tab;
     }
-    void sortScores(Score[] tab) {
+    void sortScores(Score[] tab) { //tri des scores
         boolean changed = true;
         while (changed) {
             changed = false;
@@ -324,7 +332,7 @@ class fightquiz extends Program {
             }
         }
     }
-    int getLowestScore(Score[] tab) {
+    int getLowestScore(Score[] tab) { //donne le score le plus bas
         int low = tab[0].score;
         for (int id = 1; id < 6; id += 1) {
             if (tab[id].score < low) {
@@ -333,7 +341,7 @@ class fightquiz extends Program {
         }
         return low;
     }
-    int getLowestScoreId(Score[] tab) {
+    int getLowestScoreId(Score[] tab) { //donne l'id du score le plus bas
         int low = tab[0].score;
         int finalId = -1;
         for (int id = 1; id < 6; id += 1) {
@@ -344,65 +352,85 @@ class fightquiz extends Program {
         }
         return finalId;
     }
-    String nameFormat(String name) {
+    String nameFormat(String name) { //formattage de l'affichage d'un pseudo
         String newName = name;
         while (length(newName) < 6) {
             newName += " ";
         }
         return newName;
     }
-    void affichScore(int score, Score[] scores) {
+    void affichScore(int score, Score[] scores, boolean battu) { //formattage de l'affichage de l'écran des scores
         extensions.File file = newFile("ressources/img/scoreMenu/noHiScore.txt");
         for (int id = 0; id < 6; id += 1) {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score) + "                  " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 6; id += 1) {
             print(readLine(file));
         }
-        print(scoreFormat(score));
+        print(scoreFormat(score, battu));
         for (int id = 0; id < 6; id += 1) {
             println(readLine(file));
         }
     }
-    void affichScoreAlt(Score[] scores) {
+    void affichScoreAlt(Score[] scores) { //version alternative de la fonction précédente sans la boite de texte affichant notre propre score
         extensions.File file = newFile("ressources/img/scoreMenu/HiScore.txt");
         for (int id = 0; id < 6; id += 1) {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score) + "                  " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 11; id += 1) {
             println(readLine(file));
         }
     }
-    void affichEnterScore(Score[] scores) {
+    void affichEnterScore(Score[] scores) { //afficher l'écran d'entrée de pseudo
         extensions.File file = newFile("ressources/img/scoreMenu/enterScore.txt");
         for (int id = 0; id < 6; id += 1) {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score) + "                  " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 11; id += 1) {
             println(readLine(file));
         }
     }
-    String[][] scoresTabToString(Score[] scores){
-        String[][] strScores = new String[7][2];
+    String[][] scoresTabToString(Score[] scores){ //donne les scores sous forme de tableau de Strings
+        String[][] strScores = new String[7][3];
         strScores[0][0] = "score";
         strScores[0][1] = "nom";
+        strScores[0][2] = "battu";
         for (int id = 0; id < 6; id += 1) {
             strScores[id+1][0] = "" + scores[id].score;
             strScores[id+1][1] = scores[id].nom;
+            strScores[id+1][2] = boolToString(scores[id].battu);
         }
         return(strScores);
+    }
+    void resetBossQuestionsIfAllUsed(Question[] questions) { //permet de faire reboucler les questions du boss si elles sont toutes passées (techniquement inateignable)
+        boolean test = false;
+        int id = 0;
+        while (id < length(questions) && !test) {
+            test = questions[id].dejaPasse;
+        }
+        if (test) {
+            for (int id2 = 0; id2 < length(questions); id2 += 1) {
+                questions[id2].dejaPasse = false;
+            }
+        }
+    }
+    String boolToString(boolean bool) {
+        if (bool) {
+            return "true";
+        }
+        return "false";
     }
 
     //parties du jeu
@@ -523,9 +551,9 @@ class fightquiz extends Program {
             //tourne pendant 5 sec
         }
     }
-    void scoreScreen(int score, Score[] scores) {
+    void scoreScreen(int score, Score[] scores, boolean battu) {
         if (score < getLowestScore(scores)) {
-            affichScore(score, scores);
+            affichScore(score, scores, battu);
         } else {
             String name = "aaaaaaa";
             while (length(name) > 6) {
@@ -535,6 +563,7 @@ class fightquiz extends Program {
             name = nameFormat(name);
             scores[getLowestScoreId(scores)].nom = name;
             scores[getLowestScoreId(scores)].score = score;
+            scores[getLowestScoreId(scores)].battu = battu;
             saveCSV(scoresTabToString(scores), "ressources/data/score.csv");
             sortScores(scores);
             affichScoreAlt(scores);
@@ -547,13 +576,14 @@ class fightquiz extends Program {
         Matière[] matières = loadData();
         Score[] scores = loadScores();
         int vies = 5;
-        int score = 0;
+        int score = 300;
+        boolean battu = false;
 
         //Intro du jeu
-        /*titleScreen();
+        titleScreen();
         delay(3000);
         cinematique("intro");
-        delay(3000);*/
+        delay(3000);
 
         //Questions dans la plaine
         String battleBg = "base";
@@ -561,7 +591,10 @@ class fightquiz extends Program {
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
-                int idMat = (int) (random() * (double) length(matières));
+                int idMat = 0;
+                while (idMat == 0) {
+                    idMat = (int) (random() * (double) length(matières));
+                }
                 String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
                 affichQuestion(vies, nomMat, ques, score, battleBg);
@@ -579,7 +612,7 @@ class fightquiz extends Program {
 
         //Transition vers le chateau
         if (vies != 0) {
-            //cinematique("transChateau");
+            cinematique("transChateau");
         }
 
         //Questions dans le chateau
@@ -588,7 +621,10 @@ class fightquiz extends Program {
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
-                int idMat = (int) (random() * (double) length(matières));
+                int idMat = 0;
+                while (idMat == 0) {
+                    idMat = (int) (random() * (double) length(matières));
+                }
                 String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
                 affichQuestion(vies, nomMat, ques, score, battleBg);
@@ -606,7 +642,7 @@ class fightquiz extends Program {
 
         //Combat contre le boss
         if (vies != 0) {
-            //cinematique("bossBattleStart");
+            cinematique("bossBattleStart");
 
             battleBg = "bossBg";
             int bossVies = 3;
@@ -614,9 +650,7 @@ class fightquiz extends Program {
                 if (vies != 0) {
                     double startTime = getTime();
                     int addScore;
-                    int idMat = (int) (random() * (double) length(matières));
-                    String nomMat = matières[idMat].mat;
-                    Question ques = chargerQuestion(matières, idMat);
+                    Question ques = chargerQuestion(matières, 0);
                     affichQuestion(vies, "boss", ques, score, battleBg);
                     boolean bonneRep = entrerRep(vies, "boss", ques, score, battleBg);
                     if (bonneRep) {
@@ -628,6 +662,7 @@ class fightquiz extends Program {
                         vies -= 1;
                         ratéQuestion("boss", battleBg);
                     }
+                    resetBossQuestionsIfAllUsed(matières.questions[0]);
                 }
             }
         }
@@ -635,9 +670,10 @@ class fightquiz extends Program {
         if (vies == 0) {
             mort(); //Écran de mort
         } else {
-            //Cinématique de fin de jeu
+            cinematique("bossBattleWon"); //Cinématique de fin de jeu
+            battu = true;
         }
 
-        //scoreScreen(score, scores);
+        scoreScreen(score, scores, battu);
     }
 }
