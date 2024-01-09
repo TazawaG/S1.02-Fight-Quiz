@@ -1,0 +1,6 @@
+filename,frames,delay,loop,loopTime,waitafter
+transVersChateau/vide,1,0,false,0,1
+transVersChateau/enterScreen,7,100,false,0,1
+transVersChateau/text1,2,3000,false,0,3
+transVersChateau/chateauAffich,15,100,false,0,0
+transVersChateau/text2,2,3000,false,0,5

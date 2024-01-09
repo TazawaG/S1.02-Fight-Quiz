@@ -1,0 +1,10 @@
+filename,frames,delay,loop,loopTime,waitafter
+bossBattleStart/enter,12,100,false,0,1
+bossBattleStart/text1,3,3000,false,0,3
+bossBattleStart/lookAround,19,100,false,0,2
+bossBattleStart/cagesAppear,7,50,false,0,1
+bossBattleStart/text2,2,500,true,3000,0
+bossBattleStart/demonAppear,21,50,false,0,1
+bossBattleStart/bossText1,2,500,true,3000,0
+bossBattleStart/bossText2,2,500,true,3000,0
+bossBattleStart/bossText3,2,500,true,3000,1

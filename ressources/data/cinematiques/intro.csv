@@ -1,0 +1,15 @@
+filename,frames,delay,loop,loopTime,waitafter
+deTrans,12,50,false,0,2
+intro/intro1,3,3000,false,0,3
+intro/introFamAppear,5,50,false,0,1
+intro/introDance,2,500,true,2000,0
+intro/intro2,2,500,true,4000,0
+intro/intro3,2,500,true,4000,0
+intro/introSky,13,50,false,0,2
+intro/introDemon,3,750,false,0,2
+intro/introKidnap,11,50,false,0,1
+intro/introKidnapText,1,2000,true,2000,0
+intro/introDemonLaugh,2,400,true,4000,0
+intro/introDemonLeave,8,400,false,0,2
+intro/introEndText,3,2500,false,0,5
+intro/introEndFade,4,100,false,0,0
