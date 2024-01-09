@@ -2,6 +2,7 @@ FightQuiz
 ===========
 
 Développé par Félix Meley & César Monnier
+
 Contacts : felix.meley.etu@univ-lille.fr , cesar.monnier.etu@univ-lille.fr
 
 
