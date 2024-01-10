@@ -25,12 +25,9 @@ Des captures d'écran illustrant le fonctionnement du logiciel sont proposées d
 - Histoire et cinématiques
 - Impossibilité de tomber plusieurs fois sur la même question
 - Deux environnements de combat + petite cinématique de transition entre les deux
-
-
-# Fonctions non-implentées
-
 - Combat contre le Boss
 - Marqueur sur l'écran des scores démarquant ceux ayant battu le jeu de ceux ayant perdu
+- Écran bonus entre les différentes parties du jeu
 
 
 # Utilisation de FightQuiz
