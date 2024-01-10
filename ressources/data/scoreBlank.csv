@@ -1,7 +1,7 @@
-score,nom
-3000,      
-2000,      
-1500,      
-1000,      
-500,      
-250,      
+score,nom,battu
+3000,      ,false
+2000,      ,false
+1500,      ,false
+1000,      ,false
+500,      ,false
+250,      ,false

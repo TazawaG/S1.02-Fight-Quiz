@@ -1,0 +1,9 @@
+filename,frames,delay,loop,loopTime,waitafter
+bossBattleWon/text1,2,3000,false,0,3
+bossBattleWon/bossExplode,8,75,false,0,2
+bossBattleWon/cageFloorOpen,18,50,false,0,2
+bossBattleWon/getUp,1,0,false,0,2
+bossBattleWon/dance,2,500,true,2000,0
+bossBattleWon/danceText1,2,500,true,4000,0
+bossBattleWon/danceText2,2,500,true,4000,0
+bossBattleWon/danceText3,2,500,true,4000,0
