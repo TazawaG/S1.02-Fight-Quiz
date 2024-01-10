@@ -53,9 +53,20 @@ class fightquiz extends Program {
     String viesAffich (int vies){ //formattage de l'affichage des vies
         String aff = "";
         int compteur = 0;
+        boolean bonusDone = false;
         while (compteur < vies) {
-            aff += "♥︎ ";
-            compteur += 1;
+            if (vies == 6 && !bonusDone) {
+                aff += "⭐";
+                compteur += 2;
+                bonusDone = true;
+            } else if (vies == 7 && !bonusDone){
+                aff += "⭐⭐";
+                compteur += 4;
+                bonusDone = true;
+            } else {
+                aff += "♥︎ ";
+                compteur += 1;
+            }
         }
         while (compteur < 5) {
             aff += "♡ ";
@@ -64,7 +75,7 @@ class fightquiz extends Program {
         return(substring(aff,0,length(aff)-1));
     }
     void showQuestion(int vies, Question ques, int score) { //formattage de l'affichage de la question
-        print(readFileAlt("B4S.txt")+scoreFormat(score,false)+readFileAlt("B4L.txt")+viesAffich(vies)+readFileAlt("B4Q.txt"));
+        print(readFileAlt("B4S.txt")+scoreFormat(score,false,true)+readFileAlt("B4L.txt")+viesAffich(vies)+readFileAlt("B4Q.txt"));
         int spaces = (78 - length(ques.ques))/2;
         for (int id = 0; id < spaces; id += 1) {
             print(" ");
@@ -224,19 +235,21 @@ class fightquiz extends Program {
         }
         return(ques.rep4.bonneRep);
     }
-    String scoreFormat (int score, boolean battu) { //formattage de l'affichage du score
+    String scoreFormat (int score, boolean battu, boolean inBattle) { //formattage de l'affichage du score
         String ScoreS = "" + score;
         while (length(ScoreS) < 8) {
             ScoreS = "0" + ScoreS;
         }
-        if (battu) {
+        if (inBattle) {
+            return (ScoreS);
+        } else if (battu) {
             return ("⭐"+ScoreS);
         }
         return("  "+ScoreS);
     }
     void affichScoreBattle(int prevScore, int newScore, int frame, String battleBg) { //formattage de l'affichage du nouveau score
-        String prevScoreS = scoreFormat(prevScore,false);
-        String newScoreS = scoreFormat(newScore,false);
+        String prevScoreS = scoreFormat(prevScore,false,true);
+        String newScoreS = scoreFormat(newScore,false,true);
         extensions.File file = newFile("ressources/img/question/mnstr/score/"+battleBg+"/"+frame+".txt");
         println(readLine(file));
         println(readLine(file));
@@ -365,13 +378,13 @@ class fightquiz extends Program {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu, false) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu, false) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 6; id += 1) {
             print(readLine(file));
         }
-        print(scoreFormat(score, battu));
+        print(scoreFormat(score, battu, false));
         for (int id = 0; id < 6; id += 1) {
             println(readLine(file));
         }
@@ -382,7 +395,7 @@ class fightquiz extends Program {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu, false) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu, false) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 11; id += 1) {
@@ -395,7 +408,7 @@ class fightquiz extends Program {
             println(readLine(file));
         }
         for (int id = 0; id < 3; id += 1) {
-            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu) + "        # ");
+            println(" #        " + (id+1) + " - " + scores[id].nom + " : " + scoreFormat(scores[id].score, scores[id].battu, false) + "              " + (id+4) + " - " + scores[id+3].nom + " : " + scoreFormat(scores[id+3].score, scores[id+3].battu, false) + "        # ");
             println(readLine(file));
         }
         for (int id = 0; id < 11; id += 1) {
@@ -413,18 +426,6 @@ class fightquiz extends Program {
             strScores[id+1][2] = boolToString(scores[id].battu);
         }
         return(strScores);
-    }
-    void resetBossQuestionsIfAllUsed(Question[] questions) { //permet de faire reboucler les questions du boss si elles sont toutes passées (techniquement inateignable)
-        boolean test = false;
-        int id = 0;
-        while (id < length(questions) && !test) {
-            test = questions[id].dejaPasse;
-        }
-        if (test) {
-            for (int id2 = 0; id2 < length(questions); id2 += 1) {
-                questions[id2].dejaPasse = false;
-            }
-        }
     }
     String boolToString(boolean bool) {
         if (bool) {
@@ -474,7 +475,7 @@ class fightquiz extends Program {
         int idImg = 0;
         println(img[0]);
         while (idImg < length(img)-1) {
-            delay(75);
+            delay(50);
             idImg = idSup(img, idImg);
             println(img[idImg]);
         }
@@ -562,12 +563,23 @@ class fightquiz extends Program {
             }
             name = nameFormat(name);
             scores[getLowestScoreId(scores)].nom = name;
-            scores[getLowestScoreId(scores)].score = score;
             scores[getLowestScoreId(scores)].battu = battu;
+            scores[getLowestScoreId(scores)].score = score;
             saveCSV(scoresTabToString(scores), "ressources/data/score.csv");
             sortScores(scores);
             affichScoreAlt(scores);
         }
+    }
+    boolean bonusScreen() {
+        String rep = "";
+        while (!equals(rep,"A") && !equals(rep,"B")) {
+            println(readFile("ressources/img/bonusScreen.txt"));
+            rep = toUpperCase(readString());
+        }
+        if (equals(rep,"A")) {
+            return true;
+        }
+        return false;
     }
 
     //algorithm
@@ -576,8 +588,9 @@ class fightquiz extends Program {
         Matière[] matières = loadData();
         Score[] scores = loadScores();
         int vies = 5;
-        int score = 300;
+        int score = 0;
         boolean battu = false;
+        boolean bonus;
 
         //Intro du jeu
         titleScreen();
@@ -587,7 +600,7 @@ class fightquiz extends Program {
 
         //Questions dans la plaine
         String battleBg = "base";
-        for (int questionId = 0; questionId < 0; questionId += 1){
+        for (int questionId = 0; questionId < 10; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
@@ -613,11 +626,17 @@ class fightquiz extends Program {
         //Transition vers le chateau
         if (vies != 0) {
             cinematique("transChateau");
+            bonus = bonusScreen(); //
+            if (bonus) {
+                vies += 1;
+            } else {
+                score += 3000;
+            }
         }
 
         //Questions dans le chateau
         battleBg = "castle";
-        for (int questionId = 0; questionId < 0; questionId += 1){
+        for (int questionId = 0; questionId < 10; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
@@ -642,6 +661,13 @@ class fightquiz extends Program {
 
         //Combat contre le boss
         if (vies != 0) {
+            bonus = bonusScreen(); //
+            if (bonus) {
+                vies += 1;
+            } else {
+                score += 3000;
+            }
+
             cinematique("bossBattleStart");
 
             battleBg = "bossBg";
@@ -662,7 +688,6 @@ class fightquiz extends Program {
                         vies -= 1;
                         ratéQuestion("boss", battleBg);
                     }
-                    resetBossQuestionsIfAllUsed(matières.questions[0]);
                 }
             }
         }
