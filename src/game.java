@@ -204,10 +204,6 @@ class fightquiz extends Program {
     }
     Question chargerQuestion(Matière[] tab, int mat) { //choix aléatoire d'une question dans une matière donnée
         int idQues = (int) (random() * (double) length(tab[mat].questions));
-        while (tab[mat].questions[idQues].dejaPasse == true) {
-            idQues = (int) (random() * (double) length(tab[mat].questions));
-        }
-        tab[mat].questions[idQues].dejaPasse = true;
         return(tab[mat].questions[idQues]);
     }
     boolean entrerRep(int vies, String mat, Question ques, int score, String battleBg) { //gère l'entrée d'une réponse de façon correcte
