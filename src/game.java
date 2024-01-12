@@ -610,6 +610,10 @@ class fightquiz extends Program {
                 }
                 String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
+                while (ques.dejaPasse) {
+                    ques = chargerQuestion(matières, idMat);
+                }
+                ques.dejaPasse = true;
                 affichQuestion(vies, nomMat, ques, score, battleBg);
                 boolean bonneRep = entrerRep(vies, nomMat, ques, score, battleBg);
                 if (bonneRep) {
@@ -646,6 +650,10 @@ class fightquiz extends Program {
                 }
                 String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
+                while (ques.dejaPasse) {
+                    ques = chargerQuestion(matières, idMat);
+                }
+                ques.dejaPasse = true;
                 affichQuestion(vies, nomMat, ques, score, battleBg);
                 boolean bonneRep = entrerRep(vies, nomMat, ques, score, battleBg);
                 if (bonneRep) {
