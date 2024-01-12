@@ -596,7 +596,7 @@ class fightquiz extends Program {
 
         //Questions dans la plaine
         String battleBg = "base";
-        for (int questionId = 0; questionId < 7; questionId += 1){
+        for (int questionId = 0; questionId < 10; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
@@ -604,12 +604,16 @@ class fightquiz extends Program {
                 while (idMat == 0) {
                     idMat = (int) (random() * (double) length(matières));
                 }
-                String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
                 while (ques.dejaPasse) {
+                    idMat = 0;
+                    while (idMat == 0) {
+                        idMat = (int) (random() * (double) length(matières));
+                    }
                     ques = chargerQuestion(matières, idMat);
                 }
                 ques.dejaPasse = true;
+                String nomMat = matières[idMat].mat;
                 affichQuestion(vies, nomMat, ques, score, battleBg);
                 boolean bonneRep = entrerRep(vies, nomMat, ques, score, battleBg);
                 if (bonneRep) {
@@ -636,7 +640,7 @@ class fightquiz extends Program {
 
         //Questions dans le chateau
         battleBg = "castle";
-        for (int questionId = 0; questionId < 7; questionId += 1){
+        for (int questionId = 0; questionId < 10; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
@@ -644,12 +648,16 @@ class fightquiz extends Program {
                 while (idMat == 0) {
                     idMat = (int) (random() * (double) length(matières));
                 }
-                String nomMat = matières[idMat].mat;
                 Question ques = chargerQuestion(matières, idMat);
                 while (ques.dejaPasse) {
+                    idMat = 0;
+                    while (idMat == 0) {
+                        idMat = (int) (random() * (double) length(matières));
+                    }
                     ques = chargerQuestion(matières, idMat);
                 }
                 ques.dejaPasse = true;
+                String nomMat = matières[idMat].mat;
                 affichQuestion(vies, nomMat, ques, score, battleBg);
                 boolean bonneRep = entrerRep(vies, nomMat, ques, score, battleBg);
                 if (bonneRep) {
