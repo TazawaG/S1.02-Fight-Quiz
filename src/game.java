@@ -600,7 +600,7 @@ class fightquiz extends Program {
 
         //Questions dans la plaine
         String battleBg = "base";
-        for (int questionId = 0; questionId < 10; questionId += 1){
+        for (int questionId = 0; questionId < 7; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
@@ -626,7 +626,7 @@ class fightquiz extends Program {
         //Transition vers le chateau
         if (vies != 0) {
             cinematique("transChateau");
-            bonus = bonusScreen(); //
+            bonus = bonusScreen(); //Écran bonus
             if (bonus) {
                 vies += 1;
             } else {
@@ -636,7 +636,7 @@ class fightquiz extends Program {
 
         //Questions dans le chateau
         battleBg = "castle";
-        for (int questionId = 0; questionId < 10; questionId += 1){
+        for (int questionId = 0; questionId < 7; questionId += 1){
             if (vies != 0) {
                 double startTime = getTime();
                 int addScore;
