@@ -9,7 +9,9 @@ Contacts : felix.meley.etu@univ-lille.fr , cesar.monnier.etu@univ-lille.fr
 # Présentation de FightQuiz
 
 Combattez des monstres avec des duels de connaissance pour sauver votre famille de l'infâme Beschooler!
-Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots.
+Des captures d'écran illustrant le fonctionnement du logiciel sont proposées dans le répertoire shots. (pas encore pour l'alpha)
+
+À l'état actuel, le jeu est entierement fonctionnel, mais manque du contenu (combat contre le boss)
 
 
 # Fonctions actuellement implentées
@@ -50,3 +52,6 @@ La fonction suivante permet la réinitialisation des scores enregistrés (attent
 ```
 ./resetScores.sh
 ```
+
+Pour une raison encore inconnue (et heureusement rare) le jeu plante parfois pendant la 2e section du jeu.
+Nous sommes désolés pour les problèmes rencontrés!
