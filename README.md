@@ -50,6 +50,3 @@ La fonction suivante permet la réinitialisation des scores enregistrés (attent
 ```
 ./resetScores.sh
 ```
-
-Pour une raison encore inconnue (et heureusement rare) le jeu plante parfois pendant la 2e section du jeu.
-Nous sommes désolés pour les problèmes rencontrés!
