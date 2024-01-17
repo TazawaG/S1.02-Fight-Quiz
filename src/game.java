@@ -689,6 +689,7 @@ class fightquiz extends Program {
                     double startTime = getTime();
                     int addScore;
                     Question ques = chargerQuestion(matières, 0);
+                    ques.dejaPasse = true;
                     affichQuestion(vies, "boss", ques, score, battleBg);
                     boolean bonneRep = entrerRep(vies, "boss", ques, score, battleBg);
                     if (bonneRep) {
